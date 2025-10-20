@@ -1,6 +1,5 @@
+from django.apps import AppConfig
 
-from django.urls import path, include
-
-urlpatterns = [
-    path('', include("c3App.urls")),
-]
+class C3AppConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'c3App'
