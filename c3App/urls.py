@@ -1,10 +1,10 @@
 from django.urls import path, include
-from .views import home, reports
+from .views import homeTemplateView
 
 
 urlpatterns = [
 
-    path('', home, name='home'),
-    path('reports/', reports, name='reports'),
+    path('',homeTemplateView.as_view, name='home'),
+    #path('reports/', reports, name='reports'),
 
 ]
