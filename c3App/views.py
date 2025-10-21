@@ -1,22 +1,21 @@
-from django.shortcuts import render
-from.forms import CommentForm
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post
-from rest_framework.decorators import api_view, detail_view,List_view, staff_member_required,template_view
+from .forms import CommentForm
+from .models import blogPost
+from django.views.decorators.http import require_http_methods, require_GET
+from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 import os
 from django.http import HttpResponse
 
 
-
-@detail_view(['POST'])
+@require_http_methods(['GET', 'POST'])
 def post_detail_view(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(blogPost, pk=pk)
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
-            comment.content_object = post
+            comment.content_object = blogPost
             comment.comment_creator = request.user
             comment.save()
             return redirect(post.get_absolute_url())
@@ -24,20 +23,19 @@ def post_detail_view(request, pk):
         comment_form = CommentForm()
 
     return render(request, 'post_detail.html', {
-        'post': post,
-        'comments': post.comments(),
+        'post': blogPost,
+        'comments': blogPost.comments.all() if hasattr(blogPost, 'comments') else [],
         'comment_form': comment_form
     })
 
 
-@api_view(['GET'])
-def homeTemplateView(template_view):
-    return HttpResponse('Welcome to the Home Page')
+def home(request):
+    return HttpResponse("gusyffusgfu")
 
-@List_view(['GET'])
+@require_GET
 def reports(request):
     return render(request, 'reports.html')
 
-@staff_member_required
+
 def orders(request):
     return render(request, 'orders.html')
