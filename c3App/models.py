@@ -7,44 +7,40 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class UserManager(BaseUserManager):
-    def create_user(self,
-                    email,
-                    password=None,
-                    **kwargs
-                    ):
+    def create_user(self, email, password=None, **kwargs):
         if not email:
-            raise ValueError(
-                "...not without a valid email."
-                )
-        email=self.normalize_email(email)
-        user=self.model(
-            email=email,
-            **kwargs
-            )
-        user.set_password(password)#check more customization options
-        user.save(using=self._db)#consider env variables
+            raise ValueError("...not without a valid email.")
+
+        email = self.normalize_email(email)
+        user = self.model(email=email, **kwargs)
+        user.set_password(password)
+        user.is_active = kwargs.get('is_active', True)
+        user.save(using=self._db)
         return user
 
-
-
-
-    def create_superuser(self, email, password=None, **kwargs):
-        kwargs.setdefault('is_staff',True)
+    def create_superuser(self, email, role='is_admin', password=None, **kwargs):
         kwargs.setdefault('is_admin', True)
+        kwargs.setdefault('is_staff', True)
+        kwargs.setdefault('is_superuser', True)
+        kwargs.setdefault('is_active', True)
 
-        if not kwargs.get('is_staff'):
-            raise ValueError("I do not know you.")
         if not kwargs.get('is_admin'):
             raise ValueError("You are not the boss of me.")
 
+        if not kwargs.get('is_superuser'):
+            raise ValueError("Superuser must have is_superuser=True.")
 
-class supporter(AbstractBaseUser):
+        return self.create_user(email, password, **kwargs)
+
+class supporter(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
     role = models.CharField(max_length=20, default='user')
     is_admin = models.BooleanField(default=False)
-    alias=models.CharField(max_length=25, default='guest')
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=True)
+
+
 
     objects = UserManager()
 

@@ -50,7 +50,7 @@ class Dev(Configuration):
     # Application definition
 
     INSTALLED_APPS = [
-
+        'django_daisy',
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
@@ -60,7 +60,8 @@ class Dev(Configuration):
         'c3App',
         'rest_framework',
         'tailwind',
-        'django_daisy',
+        'crispy_bootstrap5',
+        'django.contrib.humanize'
         ###'django_filters',
     ]
 
@@ -148,7 +149,8 @@ class Dev(Configuration):
     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
     DJANGO_CONFIGURATION = 'Dev'
     DJANGO_SETTINGS_MODULE = 'c3.settings'
-
+    CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'  # or your chosen one
+    CRISPY_TEMPLATE_PACK = 'bootstrap5'
     #logging can be done anywhere in the code since logging import is globally accessible.
     #best done in the settings .py: centralizing configs,clean and logging at startup.
 

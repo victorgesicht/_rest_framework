@@ -1,10 +1,10 @@
-from django.urls import path, include
-from .views import homeTemplateView
+from django.urls import path
+from . import views
 
 
 urlpatterns = [
 
-    path('',homeTemplateView.as_view, name='home'),
+    path('', views.home, name='home'),
     #path('reports/', reports, name='reports'),
 
 ]
