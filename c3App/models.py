@@ -25,10 +25,10 @@ class UserManager(BaseUserManager):
         kwargs.setdefault('is_active', True)
 
         if not kwargs.get('is_admin'):
-            raise ValueError("You are not the boss of me.")
+            raise ValueError("Try BruteForcing son")
 
         if not kwargs.get('is_superuser'):
-            raise ValueError("Superuser must have is_superuser=True.")
+            raise ValueError("Try BruteForcing son")
 
         return self.create_user(email, password, **kwargs)
 
@@ -38,7 +38,7 @@ class supporter(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(max_length=20, default='user')
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
 
 
 

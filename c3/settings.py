@@ -12,6 +12,7 @@ from configurations import Configuration
 class Dev(Configuration):
     BASE_DIR = Path(__file__).resolve().parent.parent
 
+    TAILWIND_APP_NAME = 'tailwindFfs'
     SECRET_KEY = 'django-insecure-fw0gc!b7jjgloxwg)-6(#s8_%3e#mxx-0o8!nu*d9^4^#$8oht'
 
     DEBUG=True
@@ -59,9 +60,13 @@ class Dev(Configuration):
         'django.contrib.staticfiles',
         'c3App',
         'rest_framework',
-        'tailwind',
         'crispy_bootstrap5',
-        'django.contrib.humanize'
+        'django.contrib.humanize',
+        'tailwind',
+        'tailwindFfs',
+
+
+
         ###'django_filters',
     ]
 
@@ -80,7 +85,7 @@ class Dev(Configuration):
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [],
+            'DIRS': [BASE_DIR / 'static'],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -151,6 +156,7 @@ class Dev(Configuration):
     DJANGO_SETTINGS_MODULE = 'c3.settings'
     CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'  # or your chosen one
     CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
     #logging can be done anywhere in the code since logging import is globally accessible.
     #best done in the settings .py: centralizing configs,clean and logging at startup.
 
