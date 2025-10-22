@@ -1,0 +1,131 @@
+{% load static %}
+
+
+        <html>
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Heyet - Tech, Dev, and Cyber Security Blog">
+        <meta name="keywords" content="development, cyber security, tech blog, programming">
+        <title>NGAO</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+                :root {
+                --primary-green: #00ff00;
+                --dark-bg: #121212;
+                --card-bg: #1e1e1e;
+                --text-color: #e0e0e0;
+                --accent-red: #ff3333;
+                --accent-yellow: #ffcc00;
+                }
+                * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', sans-serif;
+                }
+                body {
+                background-color: var(--dark-bg);
+                color: var(--text-color);
+                line-height: 1.6;
+                }
+                header {
+                padding: 2rem;
+                background-color: var(--card-bg);
+                box-shadow: 0 2px 10px rgba(0,255,0,0.1);
+                }
+                .logo {
+                font-size: 2.5rem;
+                color: var(--primary-green);
+                text-decoration: none;
+                font-weight: bold;
+                }
+                .search-container {
+                max-width: 600px;
+                margin: 2rem auto;
+                padding: 0 1rem;
+                }
+                .search-bar {
+                width: 100%;
+                padding: 0.8rem;
+                background: var(--card-bg);
+                border: 1px solid var(--primary-green);
+                color: var(--text-color);
+                border-radius: 5px;
+                outline: none;
+                }
+                .blog-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                }
+                .blog-card {
+                background: var(--card-bg);
+                padding: 1.5rem;
+                border-radius: 10px;
+                transition: transform 0.3s ease;
+                border: 1px solid transparent;
+                }
+                .blog-card:hover {
+                transform: translateY(-5px);
+                border-color: var(--primary-green);
+                }
+                .blog-card h2 {
+                color: var(--primary-green);
+                margin-bottom: 1rem;
+                }
+                .blog-card .date {
+                color: var(--accent-yellow);
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+                }
+                .blog-card .tag {
+                display: inline-block;
+                padding: 0.3rem 0.8rem;
+                background: var(--accent-red);
+                border-radius: 15px;
+                font-size: 0.8rem;
+                margin-right: 0.5rem;
+                margin-top: 1rem;
+                }
+                @media (max-width: 768px) {
+                .blog-container {
+                        grid-template-columns: 1fr;
+                        padding: 1rem;
+                }
+                header {
+                        padding: 1rem;
+                        text-align: center;
+                }
+                .logo {
+                        font-size: 2rem;
+                }
+                }
+        </style>
+</head>
+<body>
+
+</html>
+
+
+{%block content %}
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+</body>
+</html>
