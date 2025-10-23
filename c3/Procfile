@@ -1,1 +1,1 @@
-web: gunicorn c3.wsgi
+web: gunicorn c3App.wsgi
