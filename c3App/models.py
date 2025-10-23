@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **kwargs)
 
-class supporter(AbstractBaseUser, PermissionsMixin):
+class Supporter(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     role = models.CharField(max_length=20, default='user')
@@ -59,7 +59,7 @@ class UserProfile(models.Model):
 
 
 
-class bugReports(models.Model):
+class BugReports(models.Model):
     author=models.ForeignKey(UserProfile, on_delete=models.PROTECT),
     reports=models.CharField(max_length=300, default=' whatchu learning...?',)
     title=models.CharField(max_length=100, default='titleHead')
@@ -70,7 +70,7 @@ class bugReports(models.Model):
     def __str__(self):
         return self.title
 
-class blogPost(models.Model):
+class BlogPost(models.Model):
     title=models.CharField(max_length=100)
     body=models.TextField()
     author=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

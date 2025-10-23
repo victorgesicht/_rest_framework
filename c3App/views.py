@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CommentForm
-from .models import blogPost
+from .models import BlogPost
 from django.views.decorators.http import require_http_methods, require_GET
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import PermissionDenied
@@ -10,7 +10,7 @@ from django.http import HttpResponse
 
 @require_http_methods(['GET', 'POST'])
 def post_detail_view(request, pk):
-    post = get_object_or_404(blogPost, pk=pk)
+    post = get_object_or_404(BlogPost, pk=pk)
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
