@@ -1,8 +1,8 @@
 
 from pathlib import Path
-from configurations import Configuration
-
-
+from configurations import Configuration, values
+import sys
+import os
 
 
 
@@ -20,13 +20,6 @@ class Dev(Configuration):
     BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-    # Quick-start development settings - unsuitable for production
-    # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-    # SECURITY WARNING: keep the secret key used in production secret!
-
-
-    # SECURITY WARNING: don't run with debug turned on in production!
 
 
 
@@ -129,7 +122,7 @@ class Dev(Configuration):
         },
     ]
 
-    AUTH_USER_MODEL = 'c3App.Supporter'
+    AUTH_USER_MODEL = 'c3App.supporter'
 
     # Internationalization
     # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -160,7 +153,32 @@ class Dev(Configuration):
     #logging can be done anywhere in the code since logging import is globally accessible.
     #best done in the settings .py: centralizing configs,clean and logging at startup.
 
+    LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
 
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+    },
+
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "verbose", "level": "INFO", "stream": "ext://sys.stdout"},
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "verbose",
+            "level": "DEBUG",
+            "filename": "app.log",
+            "maxBytes": 5_000_000,
+            "backupCount": 5,
+            "encoding": "utf8"
+        }
+    },
+
+    "root": {"level": "DEBUG", "handlers": ["console", "file"]},
+    }
 class Prod(Dev):
-    ALLOWED_HOSTS =['*']
     DEBUG = False
+    SECRET_KEY=values.SecretValue()
