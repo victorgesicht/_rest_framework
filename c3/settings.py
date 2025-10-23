@@ -121,7 +121,6 @@ class Dev(Configuration):
             'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         },
     ]
-
     AUTH_USER_MODEL = 'c3App.Supporter'
 
     # Internationalization
@@ -179,6 +178,9 @@ class Dev(Configuration):
 
     "root": {"level": "DEBUG", "handlers": ["console", "file"]},
     }
+
+
+
 class Prod(Dev):
     DEBUG = False
     SECRET_KEY=values.SecretValue()
