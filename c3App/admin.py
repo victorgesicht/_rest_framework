@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import supporter, UserProfile, blogPost, bugReports
+from .models import Supporter, UserProfile, BlogPost, BugReports
 
-admin.site.register(supporter)
+admin.site.register(Supporter)
 admin.site.register(UserProfile)
-admin.site.register(blogPost)
-admin.site.register(bugReports)
+admin.site.register(BlogPost)
+admin.site.register(BugReports)

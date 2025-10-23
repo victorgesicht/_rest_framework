@@ -122,7 +122,7 @@ class Dev(Configuration):
         },
     ]
 
-    AUTH_USER_MODEL = 'c3App.supporter'
+    AUTH_USER_MODEL = 'c3App.Supporter'
 
     # Internationalization
     # https://docs.djangoproject.com/en/5.2/topics/i18n/
