@@ -121,7 +121,6 @@ class Dev(Configuration):
             'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         },
     ]
-    AUTH_USER_MODEL = 'c3App.Supporter'
 
     # Internationalization
     # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -148,6 +147,7 @@ class Dev(Configuration):
     DJANGO_SETTINGS_MODULE = 'c3.settings'
     CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'  # or your chosen one
     CRISPY_TEMPLATE_PACK = 'bootstrap5'
+    AUTH_USER_MODEL = 'c3App.DefaultUser'
 
     #logging can be done anywhere in the code since logging import is globally accessible.
     #best done in the settings .py: centralizing configs,clean and logging at startup.

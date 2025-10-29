@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
@@ -18,7 +18,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, **kwargs):
+    def create_superuser(self, email, password, **kwargs):
         kwargs.setdefault('is_admin', True)
         kwargs.setdefault('is_staff', True)
         kwargs.setdefault('is_superuser', True)
@@ -32,10 +32,10 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **kwargs)
 
-class Supporter(AbstractBaseUser, PermissionsMixin):
+class DefaultUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
-    role = models.CharField(max_length=20, default='user')
+    role = models.CharField(max_length=20, default='DefaultUser')
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -50,17 +50,7 @@ class Supporter(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-
-
-class UserProfile(models.Model):
-    user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    bio=models.TextField(max_length=500, default='')
-    profile_pic=models.ImageField(upload_to='profile_pics/', default='default.jpg')
-
-
-
 class BugReports(models.Model):
-    author=models.ForeignKey(UserProfile, on_delete=models.PROTECT),
     reports=models.CharField(max_length=300, default=' whatchu learning...?',)
     title=models.CharField(max_length=100, default='titleHead')
     poc_image=models.ImageField(upload_to='bug_pics/', default='nopic.jpg')
