@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CommentForm
-from .models import BlogPost
+from .models import BlogPost, Defaults
 from django.views.decorators.http import require_http_methods, require_GET
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import PermissionDenied
@@ -31,8 +31,9 @@ def post_detail_view(request, pk):
 
 
 def home(request):
-
-    return render(request, 'index.html')
+    blogs= BlogPost.objects.all()
+    default=Defaults.objects.first()  # Assuming you want the first Defaults object
+    return render(request, 'index.html', {'blogs': blogs, 'default': default})
 
 
 @require_GET
