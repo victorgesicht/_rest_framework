@@ -55,7 +55,7 @@ class Dev(Configuration):
         'rest_framework',
         'crispy_bootstrap5',
         'django.contrib.humanize',
-        'tailwindFfs',
+
 
 
 
