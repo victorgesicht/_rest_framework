@@ -5,33 +5,43 @@
 {% block content %}
 
 
-<header>
+<header className=" h-">
     {% if default.logoImage %}
             <img src="{{ default.logoImage.url }}" class="logo">
         {% endif %}
     <div class="nav-links">
 
-            <a href="#" class="reports">Reports</a>
-            <a href="#" class="blogs">Blogs</a>
+            <a href="#" class="reports">Research</a>
+            <a href="#" class="blogs">Write ups</a>
+            <a href="#" class="blogs">About</a>
         </div>
 </header>
 
-
-
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search articles...">
-    </div>
+<div class="search-container">
+    <input type="text" class="search-bar" placeholder="Search articles...">
+</div>
     {% for blog in blogs %}
-    <main class="blog-container">
-        <article class="blog-card">
-            <h2>{{blog.title}}</h2>
-            <div class="date"><i class="fas fa-calendar"></i> {{blog.created_at}}</div>
-            <p>{{blog.slug}}</p>
-            <span class="tag">{{blog.category}}</span>
-        </article>
-    {% endfor %}
+<main class="blog-container">
+    <article class="blog-card">
+        <h2>{{ blog.title }}</h2>
+        <div class="date">
+            <i class="fas fa-calendar"></i> {{ blog.created_at }}
+        </div>
+        <p>{{ blog.slug }}</p>
 
-    </main>
+        <!-- Loop through the blog's categories -->
+        {% for category in blog.categories.all %}
+            <span class="tag">{{ category.categoryClass }}</span>
+        {% empty %}
+            <span class="tag">No category</span>
+        {% endfor %}
+    </article>
+</main>
+{% endfor %}
+
+
+
+
 
     <script>
         document.querySelector('.search-bar').addEventListener('input', function(e) {
