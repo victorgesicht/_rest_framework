@@ -65,31 +65,22 @@ class BlogPost(models.Model):
     author=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
-    comments=GenericRelation('Comment')
-    Category=GenericRelation('Category')
+    category = models.ManyToManyField('Category',blank=True, related_name='categoryClass')
+
+
     def __str__(self):
         return self.title
 
-class Comment(models.Model):
-    comment_creator=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    text=models.TextField()
-    created_at=models.DateTimeField(auto_now_add=True)
-    content_type=models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id=models.PositiveIntegerField()
-    content_object=GenericForeignKey('content_type', 'object_id')
-
-
-    def __str__(self):
-        return self.comment_creator
-
-
-
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    categoryClass = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=True)
     ContentType= models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField ()
     content_object = GenericForeignKey('ContentType', 'object_id')
+
+    def __str__(self):
+        return self.categoryClass
+
 class LogEntries(models.Model):
     logger_name = models.CharField(max_length=255)
     log_level = models.CharField(max_length=50)
