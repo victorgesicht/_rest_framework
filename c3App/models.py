@@ -5,7 +5,6 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.contenttypes.models import ContentType
 
 
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
         if not email:
@@ -19,16 +18,15 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password, **kwargs):
-        kwargs.setdefault('is_admin', True)
         kwargs.setdefault('is_staff', True)
         kwargs.setdefault('is_superuser', True)
         kwargs.setdefault('is_active', True)
 
-        if not kwargs.get('is_admin'):
-            raise ValueError("Try BruteForcing son")
-
         if not kwargs.get('is_superuser'):
             raise ValueError("Try BruteForcing son")
+        if not kwargs.get('is_staff'):
+            raise ValueError("Try BruteForcing son")
+
 
         return self.create_user(email, password, **kwargs)
 
@@ -62,11 +60,13 @@ class BugReports(models.Model):
 
 class BlogPost(models.Model):
     title=models.CharField(max_length=100)
+    slug=models.SlugField(max_length=100, unique=True, default='slug')
     body=models.TextField()
     author=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     comments=GenericRelation('Comment')
+    Category=GenericRelation('Category')
     def __str__(self):
         return self.title
 
@@ -81,3 +81,27 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment_creator
+
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, null=True)
+    ContentType= models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField ()
+    content_object = GenericForeignKey('ContentType', 'object_id')
+class LogEntries(models.Model):
+    logger_name = models.CharField(max_length=255)
+    log_level = models.CharField(max_length=50)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"[{self.timestamp}] {self.log_level} - {self.logger_name}: {self.message}"
+
+class Defaults(models.Model):
+    logoImage = models.ImageField('samurai.jpeg', upload_to='default_images/', default='samurai.jpeg')
+    logoImageName = models.CharField(max_length=100, default='samurai.jpeg')
+    def __str__(self):
+        return self.logoImageName
+
