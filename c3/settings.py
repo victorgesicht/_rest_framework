@@ -3,7 +3,7 @@ from pathlib import Path
 from configurations import Configuration, values
 import sys
 import os
-
+import dj_database_url
 
 
 #no logger needed cause of django_crispy_logging
@@ -187,3 +187,8 @@ class Prod(Dev):
     DEBUG = False
     SECRET_KEY=values.SecretValue()
     ALLOWED_HOSTS= values.ListValue(['9t6-production.up.railway.app'])
+
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=60
+            )
+    }
