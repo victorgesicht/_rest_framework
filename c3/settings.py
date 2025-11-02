@@ -190,7 +190,7 @@ class Prod(Dev):
     DATABASES = {
         'default': dj_database_url.config(
             conn_max_age=600,
-            env='MYSQL_URL',# Keep database connections open for performance
+            env='MYSQL_URL',sql# Keep database connections open for performance
             ssl_require=True        # Enforce SSL (Railway Postgres uses SSL)
         )
     }
