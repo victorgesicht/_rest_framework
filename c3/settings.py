@@ -189,8 +189,8 @@ class Prod(Dev):
     ALLOWED_HOSTS= values.ListValue(['9t6-production.up.railway.app'])
     DATABASES = {
         'default': dj_database_url.config(
-            conn_max_age=600,
-            env='MYSQL_URL',sql# Keep database connections open for performance
+            conn_max_age=600,  # Keep database connections open for performance
+            env='MYSQL_URL',
             ssl_require=True        # Enforce SSL (Railway Postgres uses SSL)
         )
     }
