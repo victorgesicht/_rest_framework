@@ -186,12 +186,17 @@ class Dev(Configuration):
 
 class Prod(Dev):
     DEBUG = False
-    SECRET_KEY=values.SecretValue()
-    ALLOWED_HOSTS= values.ListValue(['9t6-production.up.railway.app'])
-    DATABASES = {
-        'default': dj_database_url.config(
-            conn_max_age=600,  # Keep database connections open for performance
-            env='MYSQL_URL',
-            ssl_require=True        # Enforce SSL (Railway Postgres uses SSL)
-        )
-    }
+    SECRET_KEY = values.SecretValue()
+    ALLOWED_HOSTS = values.ListValue(['9t6-production.up.railway.app'])
+
+    # Parse the MySQL URL from environment
+    db_config = dj_database_url.parse(
+        os.environ.get('MYSQL_URL'),
+        conn_max_age=600
+    )
+
+    # Remove any PostgreSQL-only parameters like 'sslmode'
+    db_config.pop('OPTIONS', None)
+
+    # Add proper MySQL SSL option
+    db_config['OPTIONS'] = {'ssl': {'require': True}}
