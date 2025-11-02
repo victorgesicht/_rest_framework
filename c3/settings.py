@@ -188,5 +188,13 @@ class Prod(Dev):
     SECRET_KEY = values.SecretValue()
     ALLOWED_HOSTS = values.ListValue(['9t6-production.up.railway.app'])
     DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'railway',
+            'USER': 'root',
+            'PASSWORD': 'HDcoADPJVAXTWRNBDPSREVBGiprLZhIj',
+            'HOST': 'mysql.railway.internal',
+            'PORT': '3306',
+        }
+    }
 
