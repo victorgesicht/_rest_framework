@@ -4,7 +4,8 @@ from configurations import Configuration, values
 import sys
 import os
 import dj_database_url
-
+import pymysql
+pymysql.install_as_MySQLdb()
 
 #no logger needed cause of django_crispy_logging
 
