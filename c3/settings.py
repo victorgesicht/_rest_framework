@@ -187,24 +187,6 @@ class Prod(Dev):
     DEBUG = False
     SECRET_KEY = values.SecretValue()
     ALLOWED_HOSTS = values.ListValue(['9t6-production.up.railway.app'])
+    DATABASES = {
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))}
 
-    MYSQL_URL = os.environ.get("MYSQL_URL")
-
-    if MYSQL_URL:
-        db_config = dj_database_url.parse(
-            MYSQL_URL,
-            conn_max_age=600
-        )
-        # Ensure correct MySQL SSL config
-        db_config.pop('OPTIONS', None)
-        db_config['OPTIONS'] = {'ssl': {'require': True}}
-        DATABASES = {'default': db_config}
-    else:
-        # Fallback to SQLite (local safety)
-        print("⚠️ Warning: MYSQL_URL not found — using SQLite fallback.")
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-            }
-        }
