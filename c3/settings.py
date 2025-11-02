@@ -193,7 +193,7 @@ class Prod(Dev):
             'NAME': 'railway',
             'USER': 'root',
             'PASSWORD': 'HDcoADPJVAXTWRNBDPSREVBGiprLZhIj',
-            'HOST': 'mysql.railway.internal',
+            'HOST': 'switchback.proxy.rlwy.net',
             'PORT': '3306',
         }
     }
