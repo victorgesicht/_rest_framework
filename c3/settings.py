@@ -187,6 +187,7 @@ class Prod(Dev):
     DEBUG = False
     SECRET_KEY=values.SecretValue()
     ALLOWED_HOSTS= values.ListValue(['9t6-production.up.railway.app'])
+
     DATABASES = {
         'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
